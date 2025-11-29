@@ -15,9 +15,10 @@ En esta guía se hizo en base a una versión con Rocky Linux sin Secure Boot, au
 > [!WARNING]
 > Si quieres aplicar esta guía con las distribuciones mencionadas anteriormente, es posible que funcione, pero es muy probable que dañes tu sistema operativo debido a la frecuencia de las actualizaciones que ofrece cada distribución. Esto incluye herramientas, kernel, controladores y kits de desarrollo, que se actualizan en períodos cortos de tiempo.
 
+> [!TIP]
 > Si buscas un tutorial para distribuciones basadas en Fedora, consulta la Guía de Post-Instalación para Fedora 43) (Puede funcionar en versiones anteriores de Fedora).
 
-[https://github.com/devangshekhawat/Fedora-43-Post-Install-Guide](Fedora-43-Post-Install-Guide)
+[https://github.com/devangshekhawat/Fedora-43-Post-Install-Guide](https://github.com/devangshekhawat/Fedora-43-Post-Install-Guide)
 
 ## [EXPERIMENTAL] Distros Basados en RHEL 
 Aunque la guía está escrita para funcionar con Rocky Linux 10 y versiones posteriores, también puede funcionar en otros sistemas basados en RHEL, como lo son:
@@ -38,12 +39,12 @@ Link para descargar Rocky Linux 10.x
 > [!IMPORTANT]
 > En esta guía se utilizará la instalación completa **(DVD ISO)**, ya que proporciona GNOME de forma predeterminada y limpia, además no es necesario seleccionar configuraciones adicionales.
   
-La versión **Online (Boot ISO)** requiere conexión a Internet durante la instalación, lo que le ofrece más opciones, repositorios y programas en función de lo que desees, pero eso no cambiará los pasos de esta guía.
+- La versión **Online (Boot ISO)** requiere conexión a Internet durante la instalación, lo que le ofrece más opciones, repositorios y programas en función de lo que desees, pero eso no cambiará los pasos de esta guía.
 
  > [!TIP]
 > Si prefieres una configuración como la versión completa (DVD ISO), solo tiene que marcar Workstation/Desktop durante la instalación.
 
-La versión **(Minimal ISO)** no instalará ninguna interfaz gráfica después de la instalación, todo lo que se haga después de reiniciar se realizará desde la línea de comandos.
+- La versión **(Minimal ISO)** no instalará ninguna interfaz gráfica después de la instalación, todo lo que se haga después de reiniciar se realizará desde la línea de comandos.
  > [!TIP]
 > Si deseas instalar un entorno gráfico, pruebe a utilizar este comando (Por defecto, esto instala el entorno Gnome)
 ```
@@ -63,7 +64,7 @@ Si instalaste la versión completa y/o una versión con componentes básicos ten
 > [!NOTE]
 > Si deseas obtener más información para saber que hace cada repositorio, visita: [https://wiki.rockylinux.org/rocky/repo/](https://wiki.rockylinux.org/rocky/repo/)
 
-# 0.5 Actualización a Rocky Linux 10.X
+# 0.5 Actualización a Rocky Linux 10.x
 A partir del 11 de Noviembre del 2025 Rocky empezo a actualizar a versiones 10.X *(Similar a sus versiones anteriores)*
 
 Si tienes la versión 10.0 y existe una versión superior (10.0 → 10.x) actualizalo a la ultima versión, así evitarás errores en esta guía.
@@ -120,7 +121,7 @@ Actualizar el repositorio de ElRepo
 sudo dnf update elrepo-release
 ```
 - Esto nos servirá para tener la key mas reciente y asi evitar problemas
-Obtener tu Key de SecureBoot (ElRepo)
+Obtener tu Key de SecureBoot **(ElRepo)**
 ```
 wget https://elrepo.org/SECURE-BOOT-KEY-elrepo.org.der
 ```
@@ -157,39 +158,41 @@ Si tienes mas dudas, visita estas páginas como alternativa a esta instalación 
 > [!IMPORTANT]
 > Muchas herramientas son para programadores, sin embargo este paso es obligatorio para aquellos que deseen instalar driver en especial los de NVIDIA e INTEL
 
-Habilita el repositorio CodeReady Builder (CRB)
+Habilita el repositorio CodeReady Builder. Tienes dos metodos para hacerlo. (CRB)
 
-## Metodo 1 - Terminal
+#### Metodo 1 - Terminal
 ```
 sudo dnf config-manager --enable crb
 ```
-## Metodo 2 - Software
-- **Software** > **Main Menu** > **Software Repositories** > **"Rocky Linux 10 - CRB"**
-  
-Instalar el grupo de "Development Tools" que viene por defecto en Rocky
+#### Metodo 2 - Software
+- Software > Main Menu > Software Repositories > "Rocky Linux 10 - CRB"
+
+
+Instala el grupo de "Development Tools" que viene por defecto en Rocky
 ```
 sudo dnf groupinstall "Development Tools"
 ```
 > El comando sirve para construir ciertos paquetes que no están pre compilados y para compilar desde su código fuente
+
 Paquetes esenciales para la gestión de paquetes y el funcionamiento de la red.
 ```
 sudo dnf install wget curl dnf-utils
 ```
 
-Instalar los paquetes Kernel-devel
+Instalar los paquetes kernel-devel
 ```
 sudo dnf install kernel-devel-matched kernel-headers
 ```
 > [!WARNING]
-> Si se hizo el paso de actualizar el Kernel lo mas probable es que este comando no funcione o te instale un paquete con el kernel que venia por defecto al inicio de la instalación. Usualmente no pasara nada y no presentara problemas
+> Usualmente no pasara nada y no presentara problemas pero si se hizo el paso de actualizar el Kernel puede que el comando no funcione o te instale un paquete con el kernel que venia por defecto al inicio de la instalación. 
 
 
 # 3. Drivers NVIDIA
-Requisitos **OBLIGATORIOS**
-- Instalar todos los paquetes de la sección **"Utilidades y Dependencias" (Paso 2) [OBLIGATORIO]**
+> [!WARNING]
+> Es **OBLIGATORIO** Instalar todos los paquetes de la sección **"Utilidades y Dependencias Esenciales" (Paso 2)**
 
 > [!NOTE]
-> En la mayoría de los casos, lo mejor es instalar los controladores NVIDIA desde la pagina oficial. Sin embargo, en Rocky tiene un repositorio para RHEL 10, lo cual facilita la instalación
+> En la mayoría de los casos, lo mejor es instalar los controladores NVIDIA desde la pagina oficial. Sin embargo, Rocky tiene un repositorio para RHEL 10, lo cual facilita la instalación
 
 ## Método Recomendado por Rocky Linux
 Agrega el repositorio oficial de NVIDIA (Rocky Linux 10 / RHEL 10)
@@ -211,17 +214,17 @@ sudo dnf install cuda-drivers
 ```
 
 #### ¿Qué drivers de NVIDIA debería escoger?
-- Drivers de Código Abierto **(nvidia-open): **
+- **Drivers de Código Abierto (nvidia-open)**
 	- Pueden funcionar en aplicaciones y entornos casuales que necesiten tarjeta gráfica como lo pueden ser juegos o aplicaciones con vistas 2D y 3D.
    
-- Drivers Propietarios **(cuda-drivers):**
+- **Drivers Propietarios (cuda-drivers):**
 	- Se requiere más en áreas de trabajo 3D, Edición de video, Simulación o Inteligencia Artificial que necesiten CUDA y aprovechar al máximo el rendimiento de tu Tarjeta Gráfica.
    
 ## Desactivar "Nouveau" como configuración
 Nouveau es un controlador NVIDIA de código abierto que ofrece una funcionalidad limitada en comparación con los controladores propietarios de NVIDIA. Es mejor desactivarlo para evitar conflictos entre controladores
 
 > [!IMPORTANT]
-> Aun si instalaste la versión propietaria con CUDA, es recomendable usar este comando. Existen situaciones en donde si no se deshabilita, el sistema cambiará automáticamente a drivers de código abierto
+> Aun si instalaste la versión propietaria con CUDA, es recomendable usar este comando, existen situaciones en donde si no se deshabilita, el sistema cambiará automáticamente a drivers de código abierto
 ```
 sudo grubby —args="nouveau.modeset=0 rd.driver.blacklist=nouveau" —update-kernel=ALL
 ```
@@ -232,16 +235,18 @@ Si tienes Secure Boot activado, necesitas activar este comando:
 sudo mokutil --import /var/lib/dkms/mok.pub
 ```
 > [!NOTE]
-> ¿Por qué?
-- Con Secure Boot activado, Linux solo cargará módulos firmados. Los drivers NVIDIA propietarios necesitan estar firmados para cargarse correctamente.
-Después de reiniciar, el sistema le preguntará si desea registrar una clave, seleccione "sí" y le pedirá crear una nueva contraseña que introdujiste en el comando mokutil *(Similar al proceso de Secure Boot del Kernel).*
+> ¿Por qué? Con Secure Boot activado, Linux solo cargará módulos firmados, los drivers NVIDIA propietarios necesitan estar firmados para cargarse correctamente.
+
+> [!IMPORTANT]
+> Después de reiniciar, el sistema le preguntará si desea registrar una clave, seleccione "sí" y le pedirá crear una nueva contraseña que introdujiste en el comando mokutil *(Similar al proceso de Secure Boot del Kernel).*
 
 ## Verifica si NVIDIA se instaló correctamente
 Al momento de que instalaste los drivers NVIDIA, lo más recomendable es:
-- Esperar 5-10 Minutos para que los drivers carguen
-- Reiniciar el Equipo
+- Esperar 5-10 minutos para que los drivers carguen.
+- Reiniciar el equipo.
   
 En cualquier caso, al momento de instalarse es necesario que verifiques si están funcionando correctamente.
+
 Verifica que el módulo del kernel de NVIDIA esté cargado
 ```
 lsmod | grep nvidia
@@ -263,9 +268,12 @@ Repositorio "RPMFusion y ElRepo" **(Alternativo)**
 # 4. Flatpak / Flathub
 
 Flatpak viene instalado por defecto a partir de Rocky 8, solo se necesita habilitar sus repositorios de Flathub
+
 ## Metodo 1 (Gnome Software)
 Instalar desde la aplicación de Software:
-- Descargue, abra e instala el archivo de repositorio Flathub: [https://dl.flathub.org/repo/flathub.flatpakrepo](https://dl.flathub.org/repo/flathub.flatpakrepo)
+- Descargue, abra e instala el archivo de repositorio Flathub:
+
+[https://dl.flathub.org/repo/flathub.flatpakrepo](https://dl.flathub.org/repo/flathub.flatpakrepo)
   
 ## Método 2 (Terminal)
 ```
@@ -282,7 +290,7 @@ sudo dnf in fuse
 ```
 - El paquete viene incluido en el repositorio de "BaseOS"
   
-# 6.  Codecs de Audio y Video
+# 6. Codecs de Audio y Video
 Codecs y Librerías adicionales para reproducir audio y videos con mayor fluidez en las aplicaciones de Linux
 
 ## Codecs Generales
@@ -311,52 +319,67 @@ Mesa es un conjunto de controladores y librerías gráficas de código abierto q
 sudo dnf install mesa-dri-drivers
 sudo dnf install mesa-libgbm
 ```
-## 8. Hardware Acceleration + GPU (NVIDIA/AMD/INTEL)
+
+# 8. Hardware Acceleration + GPU (NVIDIA/AMD/INTEL)
+
 A partir de aquí dependiendo de tu hardware, necesitas instalar estos paquetes para sacarle mas provecho a tu GPU (o CPU con gráficos integrados)
-### Intel
-#### Libva + Intel (Gráficos Integrados) (Moderno) (CPU Haswell o superiores)
+
+## Intel
+### Libva + Intel (Gráficos Integrados) (Moderno) (CPU Haswell o superiores)
 ```
 sudo dnf install libva-intel-driver
 ```
-#### Libva + Intel (Gráficos Integrados) (Antiguo) (G45, Sandy Bridge, Ivy Bridge o anteriores)
+### Libva + Intel (Gráficos Integrados) (Antiguo) (G45, Sandy Bridge, Ivy Bridge o anteriores)
 ```
 sudo dnf install libva-intel-hybrid-driver
 ```
-#### Libva + Intel (Discreto) (Arc / Intel Iris Xe MAX)
+### Libva + Intel (Discreto) (Arc / Intel Iris Xe MAX)
 ```
 sudo dnf install intel-media-driver
 ```
-Igualmente puedes instalar todos los paquetes.
-### AMD
+> [!NOTE]
+> Igualmente puedes instalar todos los paquetes.
+
+## AMD
 AMD no usa un paquete separado como Intel o NVIDIA, toda la aceleración de video AMD está integrada dentro de Mesa, igualmente usamos el comando anterior de la sección Mesa.
 ```
 sudo dnf install mesa-dri-drivers
 sudo dnf install mesa-libgbm
 ```
-### NVIDIA
-#### Libva + NVIDIA
+
+## NVIDIA
+
+### Libva + NVIDIA
 ```
 sudo dnf install libva-nvidia-driver
 ```
-## 9. Optimizaciones
-#### Desactivar servicio "NetworkManager-wait-online.service"
-Por defecto, Linux comprueba que tengas internet, en caso de que no tengas internet o no se detecta bien tu placa Wifi/Bluetooth puede terminar en un ciclo infinito.
+
+# 9. Optimizaciones
+## Desactivar servicio "NetworkManager-wait-online.service"
+
+> [!NOTE]
+> Por defecto, Linux comprueba que tengas internet, en caso de que no tengas internet o no se detecta bien tu placa Wifi/Bluetooth puede terminar en un ciclo infinito.
+
 ```
 sudo systemctl disable NetworkManager-wait-online.service
 ```
-#### Desactivar Gnome Software al iniciar el equipo
+## Desactivar Gnome Software al iniciar el equipo
 ```
 sudo rm /etc/xdg/autostart/org.gnome.Software.desktop
 ```
-Reduce entre 50 y 200MB de RAM, lo cual es una buena adición si tienes ram limitada
-## 10. Complementos Adiciones
-#### Gnome Tweaks
+> [!NOTE]
+> Reduce entre 50 y 200MB de RAM, lo cual es una buena adición si tienes ram limitada
+
+# 10. Complementos Adiciones
+## Gnome Tweaks
 ```
 sudo dnf install gnome-tweaks
 ```
-## Observaciones
+
+# Observaciones
 - Terra no funciona en distros basadas en RHEL
-## Cosas por Agregar
+
+# Cosas por Agregar
 - Impresoras y Escanner
 - Rendimiento en Laptops
 - Optimización en Laptops (AMD/NVIDIA/INTEL)
