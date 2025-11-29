@@ -1,4 +1,12 @@
-![alt text](https://github.com/AlejandroSQR/Rocky-Linux-10.x-Post-Installation-Guide/blob/main/images/rockypostguide10xlogo.svg "RockyL10XPI")
+<div align="center"> 
+  
+<img src="https://raw.githubusercontent.com/AlejandroSQR/Rocky-Linux-10.x-Post-Installation-Guide/main/images/rockypostguide10xlogo.svg" width="700" alt="RockyL10XPI">
+
+# Rocky Linux 10.x - Guia Post-Instalación (v0.5)
+
+  **Guia detalla instalación de Rocky Linux y futuras versiones (WIP)**
+
+</div>
 
 # Introducción
 Rocky Linux 10 es una distribución basada en RHEL que tiene como objetivo la estabilidad a largo plazo, que se mantiene constante a lo largo del tiempo y evita cambios frecuentes o rápidos. Esta guia sirve para aquellos usuarios que deseen tener su escritorio actualizado y lo escencial para poder trabajar.
