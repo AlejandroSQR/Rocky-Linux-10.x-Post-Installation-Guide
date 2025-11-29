@@ -184,11 +184,11 @@ Instalar los paquetes kernel-devel
 sudo dnf install kernel-devel-matched kernel-headers
 ```
 > [!WARNING]
-> Usualmente no pasara nada y no presentara problemas pero si se hizo el paso de actualizar el Kernel puede que el comando no funcione o te instale un paquete con el kernel que venia por defecto al inicio de la instalación. 
+> Aun con el Kernel nuevo no pasara nada y no presentara problemas pero puede llegar a pasar que el comando no funcione o te instale un paquete con una version antigua de la instalación. 
 
 
 # 3. Drivers NVIDIA
-> [!WARNING]
+> [!CAUTION]
 > Es **OBLIGATORIO** Instalar todos los paquetes de la sección **"Utilidades y Dependencias Esenciales" (Paso 2)**
 
 > [!NOTE]
