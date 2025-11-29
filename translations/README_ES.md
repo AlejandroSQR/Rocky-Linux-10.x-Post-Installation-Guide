@@ -1,7 +1,6 @@
-# Introducción
+## Introducción
 El ecosistema Linux basado en paquetería RPM/DNF incluye una variedad de distribuciones que varían dependiendo de su comunidad, pero cada una tiene fines diferentes.
 Esta guía está enfocada a Rocky Linux 10 y versiones posteriores, una distribución basada en RHEL que tiene como objetivo la estabilidad a largo plazo, que se mantiene constante a lo largo del tiempo y evita cambios frecuentes o rápidos.
-
 ## Cosas a considerar antes de instalar
 ### Secure Boot Desactivado [IMPORTANTE]
 En esta guía se hizo en base a una versión con Rocky Linux sin Secure Boot, aun así en algunos puntos se resalta que hacer en caso de que esté activado.
@@ -45,15 +44,15 @@ sudo dnf upgrade
 #### Método 2 - Software
 **Software > Updates > Check Updates**
 ## 1. Repositorios Esenciales
-1.1 Agrega los repositorios "EPEL" (Extra Packages for Enterprise Linux)
+Agrega los repositorios "EPEL" (Extra Packages for Enterprise Linux)
 ```
 sudo dnf install epel-release
 ```
-1.2 Agrega los repositorios "ElRepo"
+Agrega los repositorios "ElRepo"
 ```
 sudo dnf install https://www.elrepo.org/elrepo-release-10.el10.elrepo.noarch.rpm
 ```
-1.3 Agrega los repositorios "RPM Fusion Free & Non Free"
+Agrega los repositorios "RPM Fusion Free & Non Free"
 ```
 sudo dnf install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
 ```
@@ -67,12 +66,12 @@ reboot
 ```
 ## 1.5 [OPCIONAL] Instalar Kernel 6.12+
 Un kernel nuevo en Rocky Linux no es necesario si no presentas algún problema con tu Hardware o dispositivos externos. En caso de que tu hardware sea muy reciente y no detecte algo en específico, el kernel estable que viene con Rocky puede no funcionar y requerir este paso.
-1.1 Importar la llave GPG
+Importar la llave GPG
 ```
 rpm —import https://www.elrepo.org/RPM-GPG-KEY-v2-elrepo.org
 ```
 - ¿Por que? RPM verifica que no haya sido modificado y que provenga realmente del repositorio oficial.
-1.2 Instala el nuevo kernel (Actualizado Diciembre 2025)
+Instala el nuevo kernel (Actualizado Diciembre 2025)
 ```
 dnf —enablerepo elrepo-kernel install kernel-ml
 ```
@@ -80,30 +79,30 @@ dnf —enablerepo elrepo-kernel install kernel-ml
 ### [IMPORTANTE] Secure Boot después de instalar el nuevo Kernel
 Este paso es muy importante si instalaste un kernel más moderno y tienes Secure Boot activado, si ignoras este paso, no te dejará iniciar el S.O correctamente.
 -Instrucciones-
-1.1 Actualizar el repositorio de ElRepo
+Actualizar el repositorio de ElRepo
 ```
 sudo dnf update elrepo-release
 ```
 - Esto nos servirá para tener la key mas reciente y asi evitar problemas
-1.1 Obtener tu Key de SecureBoot - ElRepo
+Obtener tu Key de SecureBoot - ElRepo
 ```
 wget https://elrepo.org/SECURE-BOOT-KEY-elrepo.org.der
 ```
-1.2 Instalar mokutil
+Instalar mokutil
 ```
 sudo dnf install mokutil
 ```
-1.3 Instalar tu Key con mokutil
+Instalar tu Key con mokutil
 ```
 mokutil --import /etc/pki/elrepo/SECURE-BOOT-KEY-elrepo.org.der
 ```
-1.4 Al momento de que ingreses el comando, te pedirá crear una contraseña y que la vuelvas a confirmar
+Al momento de que ingreses el comando, te pedirá crear una contraseña y que la vuelvas a confirmar
 ```
 input password:
 input password again:
 ```
-1.5 Una vez creada tu contraseña, reinicia y veras la pantalla de "Shim UEFI Key Management**"** (Generalmente es Azul)
-1.6 Presione cualquier tecla en un plazo de 10 segundos para continuar. Ingresa utilizando la contraseña establecida anteriormente
+Una vez creada tu contraseña, reinicia y veras la pantalla de "Shim UEFI Key Management**"** (Generalmente es Azul)
+Presione cualquier tecla en un plazo de 10 segundos para continuar. Ingresa utilizando la contraseña establecida anteriormente
 **NOTA: **Si ves que al ingresar la contraseña dice "GPG check FAILED" "Error when fetching, installing or upgrading packages" es porque lanzaron una nueva key, lo más recomendable es desactivar Secure Boot para volver a entrar y generar una nueva key.
 En caso de algún error con el Kernel, regresa a la versión anterior mediante GRUB o vuelve a reinstalar tu S.O
 Si tienes mas dudas, visita estas páginas como alternativa a esta instalación del Kernel
@@ -112,23 +111,23 @@ Si tienes mas dudas, visita estas páginas como alternativa a esta instalación 
 ## 2. Utilidades y Dependencias Esenciales
 Muchas herramientas son para programadores, sin embargo
 - Este paso es obligatorio para aquellos que deseen instalar los drivers de NVIDIA
-1.1 Habilita el repositorio CodeReady Builder (CRB)
+Habilita el repositorio CodeReady Builder (CRB)
 #### Metodo 1 - Terminal
 ```
 sudo dnf config-manager --enable crb
 ```
 #### Metodo 2 - Software
 - **Software** > **Main Menu** > **Software Repositories** > **"Rocky Linux 10 - CRB"**
-1.2 Instalar el grupo de "Development Tools" que viene por defecto en Rocky
+Instalar el grupo de "Development Tools" que viene por defecto en Rocky
 ```
 sudo dnf groupinstall "Development Tools"
 ```
 - El comando sirve para construir ciertos paquetes que no están pre compilados y para compilar desde su código fuente
-1.3 Paquetes esenciales para la gestión de paquetes y el funcionamiento de la red.
+Paquetes esenciales para la gestión de paquetes y el funcionamiento de la red.
 ```
 sudo dnf install wget curl dnf-utils
 ```
-1.4 Instalar los paquetes Kernel-devel
+Instalar los paquetes Kernel-devel
 ```
 sudo dnf install kernel-devel-matched kernel-headers
 ```
@@ -138,15 +137,15 @@ Requisitos **OBLIGATORIOS**
 - Instalar todos los paquetes de la sección **"Utilidades y Dependencias" (Paso 2) [OBLIGATORIO]**
 En la mayoría de los casos, lo mejor es instalar los controladores NVIDIA desde la pagina oficial. Sin embargo, en Rocky tiene un repositorio para RHEL 10, lo cual facilita la instalación
 ### Método 1 (Recomendado por Rocky Linux)
-1.1 Agrega el repositorio oficial de NVIDIA (Rocky Linux 10 / RHEL 10)
+Agrega el repositorio oficial de NVIDIA (Rocky Linux 10 / RHEL 10)
 ```
 sudo dnf config-manager —add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel10/$(uname -m)/cuda-rhel10.repo
 ```
-1.2 Limpia el cache de los Repositorios
+Limpia el cache de los Repositorios
 ```
 sudo dnf clean expire-cache
 ```
-1.3 Selecciona el Driver que te interesa instalar, tienes dos opciones para hacerlo:
+Selecciona el Driver que te interesa instalar, tienes dos opciones para hacerlo:
 #### Drivers Libres / Código Abierto
 ```
 sudo dnf install nvidia-open
@@ -160,7 +159,7 @@ sudo dnf install cuda-drivers
 	- Pueden funcionar en aplicaciones y entornos casuales que necesiten tarjeta gráfica como lo pueden ser juegos o aplicaciones con vistas 2D y 3D.
 - Drivers Propietarios **(cuda-drivers):**
 	- Se requiere más en áreas de trabajo 3D, Edición de video, Simulación o Inteligencia Artificial que necesiten CUDA y aprovechar al máximo el rendimiento de tu tarjeta gráfica
-1.4 Desactivar "Nouveau" como configuración
+Desactivar "Nouveau" como configuración
 Nouveau es un controlador NVIDIA de código abierto que ofrece una funcionalidad limitada en comparación con los controladores propietarios de NVIDIA. Es mejor desactivarlo para evitar conflictos entre controladores
 - Aun si instalaste la versión propietaria con CUDA, es recomendable usar este comando
 - Existen situaciones en donde si no se deshabilita, el sistema cambiará automáticamente a drivers de código abierto
