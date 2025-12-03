@@ -45,8 +45,9 @@ Link para descargar Rocky Linux 10.x
 [https://rockylinux.org/download](https://rockylinux.org/download)
 
 > [!IMPORTANT]
-> En esta guía se utilizará la instalación completa **(DVD ISO)**, ya que proporciona GNOME de forma predeterminada y limpia, además no es necesario seleccionar configuraciones adicionales.
-  
+> En esta guía se utilizará la instalación completa **(DVD ISO)**, ya que proporciona GNOME de forma predeterminada y limpia, además no es necesario seleccionar configuraciones adicionales. 
+---
+
 - La versión **Online (Boot ISO)** requiere conexión a Internet durante la instalación, lo que le ofrece más opciones, repositorios y programas en función de lo que desees, pero eso no cambiará los pasos de esta guía.
 
  > [!TIP]
