@@ -408,5 +408,3 @@ sudo dnf install gnome-tweaks
 - System behavior with the Updated Kernel
 - Check if the system can break with general updates
 - Behavior between Versions of Rocky 10 (Ex: 10.0 to 10.1 and future versions)
-
-If you would like me to format this as a Markdown file download or assist with any specific section of the guide, just let me know!
