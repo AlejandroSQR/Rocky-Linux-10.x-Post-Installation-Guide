@@ -6,7 +6,7 @@
 
   **Detailed Guide for Rocky Linux 10.x and Future Versions (WIP)**
 
-Report any issues or Bugs you find in our repository's Issues tab, or on our in Discord
+Report any issues or Bugs you find in our repository's Issues tab, or in Discord Server
 
 [![Discord](https://img.shields.io/badge/Discord-Join_Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ADHq9Mp7Wx)
 
